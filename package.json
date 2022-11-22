@@ -1,8 +1,8 @@
 {
   "name": "incremental-csv-parser",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple, browser compatible, incremental CSV parser.",
-  "main": "dist/esm/index.js",
+  "main": "dist/cjs/index.js",
   "repository": "https://github.com/AllAwesome497/incremental-csv-parser",
   "author": "Wade Bourne <wade@wbourne.dev>",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "test": "jest",
     "prepack": "yarn test && yarn build"
   },
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/esm/index.mjs",
