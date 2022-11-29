@@ -7,6 +7,7 @@ interface CSVParserTest {
   headers?: Array<string>;
   chunks: Array<string>;
   expected: Array<Record<string, string>>;
+  expectedHeaders?: Array<string>;
 }
 
 describe('SimpleCSVParser', () => {
@@ -105,17 +106,50 @@ describe('SimpleCSVParser', () => {
         { a: '5', b: '6', c: '7', d: '8' },
       ],
     },
-  ])('$name', ({ chunks, expected, headers }) => {
-    const results: Array<Record<string, string>> = [];
-
-    const parser = new CSVParser((data) => results.push(data), headers);
-
-    for (const chunk of chunks) {
-      parser.process(chunk);
+    {
+      name: 'headers no data',
+      chunks: ['a,b,c,d\n'],
+      expected: [],
+      expectedHeaders: ['a', 'b', 'c', 'd'],
+    },
+    {
+      name: 'headers no data (no newline)',
+      chunks: ['a,b,c,d'],
+      expected: [],
+      expectedHeaders: ['a', 'b', 'c', 'd'],
+    },
+    {
+      name: 'manually defined headers',
+      chunks: [],
+      expected: [],
+      expectedHeaders: ['a', 'b', 'c'],
+      headers: ['a', 'b', 'c'],
     }
+  ])(
+    '$name',
+    ({
+      chunks,
+      expected,
+      expectedHeaders = expected.length > 0
+        ? Object.keys(expected[0])
+        : undefined,
+      headers,
+    }) => {
+      const results: Array<Record<string, string>> = [];
 
-    parser.flush();
+      const parser = new CSVParser((data) => results.push(data), headers);
 
-    expect(results).toEqual(expected);
-  });
+      for (const chunk of chunks) {
+        parser.process(chunk);
+      }
+
+      parser.flush();
+
+      expect(results).toEqual(expected);
+
+      if (expectedHeaders) {
+        expect(parser.headers()).toEqual(expectedHeaders);
+      }
+    },
+  );
 });

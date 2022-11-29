@@ -1,6 +1,6 @@
 {
   "name": "incremental-csv-parser",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A simple, browser compatible, incremental CSV parser.",
   "main": "dist/cjs/index.js",
   "repository": "https://github.com/AllAwesome497/incremental-csv-parser",

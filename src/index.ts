@@ -118,7 +118,7 @@ export class CSVParser<K extends string> {
    * @throws Error if the stream did not end in a valid row.
    */
   flush() {
-    if ((!this._value && this._row.length === 0) || !this._headers) {
+    if (!this._value && this._row.length === 0) {
       // clean exit
       return;
     }
@@ -128,6 +128,14 @@ export class CSVParser<K extends string> {
     } catch (err) {
       throw new Error(`invalid EOF: ${(err as Error).message}`);
     }
+  }
+
+  /**
+   * Gets headers parsed for the csv.
+   * @returns Headers for the csv (or undefined if they haven't been parsed yet)
+   */
+  headers() {
+    return this._headers;
   }
 
   protected _finalizeValue(rowEnd?: boolean) {
