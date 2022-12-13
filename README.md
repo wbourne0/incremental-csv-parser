@@ -52,7 +52,7 @@ If column names are known ahead of time, they can be passed in via generics.
 import { CSVParser } from 'incremental-csv-parser';
 
 type ColumnName = 'a' | 'b' | 'c' | 'd';
-const results: Record<ColumnName, string> = [];
+const results: Array<Record<ColumnName, string>> = [];
 
 const parser = new CSVParser<ColumName>((row) => {
   results.push(row);
